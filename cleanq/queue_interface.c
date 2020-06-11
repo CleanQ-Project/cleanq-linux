@@ -14,7 +14,7 @@
 #include <cleanq_backend.h>
 
 #include "region_pool.h"
-#include "dqi_debug.h"
+#include "debug.h"
 
 
 /*

@@ -14,7 +14,7 @@
 #include <slab.h>
 
 #include "region_pool.h"
-#include "dqi_debug.h"
+#include "debug.h"
 
 
 ///< defines the initial pool size
