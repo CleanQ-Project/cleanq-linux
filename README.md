@@ -22,9 +22,16 @@ See the CONTRIBUTING file.
 
 ## Dependencies
 
-TODO.
-
+libnuma-dev
 
 ## Compiling and Running
 
-TODO.
+Bulding DPDK
+
+cd dpdk-stable-18.11.1
+make config install T=x86_64-native-linuxapp-gcc
+
+Build applications
+export RTE_SDK=<path to dpdk-stable-18.11.1>
+cd benchmark_cleanq
+make
