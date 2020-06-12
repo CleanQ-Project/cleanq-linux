@@ -29,11 +29,14 @@ typedef uint64_t ffq_payload_t;
 ///< size of a message in bytes (multiple of architectures cacheline size)
 #define FFQ_MSG_BYTES (1 * ARCH_CACHELINE_SIZE)
 
+///< the alignment of the FFQ messages
+#define FFQ_MSG_ALIGNMENT ARCH_CACHELINE_SIZE
+
 ///< the number of words of a message
 #define FFQ_MSG_WORDS (FFQ_MSG_BYTES / sizeof(ffq_payload_t))
 
 ///< this is a FFQ message slot, should be aligned to a cache line
-struct __attribute__((aligned(ARCH_CACHELINE_SIZE))) ffq_slot
+struct __attribute__((aligned(FFQ_MSG_ALIGNMENT))) ffq_slot
 {
     ///< the message data
     ffq_payload_t data[FFQ_MSG_WORDS];
