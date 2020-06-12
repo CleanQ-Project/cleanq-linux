@@ -61,7 +61,7 @@ struct region
     uint64_t base_addr;
 
     ///< memory handle backing this memory region
-    struct capref *cap;
+    struct capref cap;
 
     ///< Lenght of the memory region in bytes
     size_t len;
@@ -257,7 +257,7 @@ errval_t region_pool_add_region(struct region_pool *pool, struct capref cap, reg
     }
 
     region->id = pool->region_offset + pool->num_regions + offset;
-    region->cap = &cap;
+    region->cap = cap;
     region->base_addr = cap.paddr;
     region->len = cap.len;
 
@@ -302,7 +302,7 @@ errval_t region_pool_add_region_with_id(struct region_pool *pool, struct capref 
         }
 
         region->id = region_id;
-        region->cap = &cap;
+        region->cap = cap;
         region->base_addr = cap.paddr;
         region->len = cap.len;
 
@@ -333,7 +333,7 @@ errval_t region_pool_remove_region(struct region_pool *pool, regionid_t region_i
         return CLEANQ_ERR_INVALID_REGION_ID;
     }
 
-    cap = region->cap;
+    *cap = region->cap;
 
     slab_free(&pool->region_alloc, region);
     pool->pool[region_id & (pool->size - 1)] = NULL;
