@@ -68,6 +68,8 @@ $(LIBRARY).a: $(OBJ_FILES) Makefile
 	ar rcs $@ $(OBJ_FILES)
 
 build: $(LIBRARY).a $(LIBRARY).so $(INCLUDES)
+	mkdir -p ../build/include
+	mkdir -p ../build/lib
 	rsync -a include/cleanq ../build/include
 	rsync $(LIBRARY).a ../build/lib
 	rsync $(LIBRARY).so ../build/lib
