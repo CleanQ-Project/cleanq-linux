@@ -263,7 +263,7 @@ errval_t cleanq_destroy(struct cleanq *q);
 
 /*
  * ================================================================================================
- * Setting/getting state
+ * Setting/getting user state
  * ================================================================================================
  */
 
@@ -286,5 +286,38 @@ void cleanq_set_state(struct cleanq *q, void *state);
  */
 void *cleanq_get_state(struct cleanq *q);
 
+
+/*
+ * ================================================================================================
+ * Setting/getting user state
+ * ================================================================================================
+ */
+
+
+///< defines the signagure of a callback function in the event of memory registration
+typedef errval_t (*cleanq_register_callback_t)(struct cleanq *q, struct capref cap,
+                                               regionid_t region_id);
+
+
+/**
+ * @brief sets the callback function for the register operation
+ *
+ * @param q     the cleanq queue state
+ * @param cb    callback function to be called
+ */
+void cleanq_set_register_callback(struct cleanq *q, cleanq_register_callback_t cb);
+
+
+///< defines the signature of a callback function in the event of memory deregistration
+typedef errval_t (*cleanq_deregister_callback_t)(struct cleanq *q, regionid_t region_id);
+
+
+/**
+ * @brief sets the callback function for the deregister operation
+ *
+ * @param q     the cleanq queue state
+ * @param cb    callback function to be called
+ */
+void cleanq_set_deregister_callback(struct cleanq *q, cleanq_deregister_callback_t cb);
 
 #endif /* CLEAN_QUEUE_H_ */

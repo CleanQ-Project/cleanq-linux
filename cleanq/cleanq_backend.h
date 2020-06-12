@@ -191,6 +191,15 @@ struct cleanq
 
     ///< use sate pointer
     void *state;
+
+    ///< event callbacks
+    struct {
+        ///< event register()
+        cleanq_register_callback_t reg;
+
+        ///< event deregister()
+        cleanq_deregister_callback_t dereg;
+    } callbacks;
 };
 
 

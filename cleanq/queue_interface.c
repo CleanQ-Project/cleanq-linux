@@ -356,3 +356,38 @@ void *cleanq_get_state(struct cleanq *q)
 
     return q->state;
 }
+
+
+/*
+ * ================================================================================================
+ * Setting/getting user state
+ * ================================================================================================
+ */
+
+
+/**
+ * @brief sets the callback function for the register operation
+ *
+ * @param q     the cleanq queue state
+ * @param cb    callback function to be called
+ */
+void cleanq_set_register_callback(struct cleanq *q, cleanq_register_callback_t cb)
+{
+    assert(q);
+
+    q->callbacks.reg = cb;
+}
+
+
+/**
+ * @brief sets the callback function for the deregister operation
+ *
+ * @param q     the cleanq queue state
+ * @param cb    callback function to be called
+ */
+void cleanq_set_deregister_callback(struct cleanq *q, cleanq_deregister_callback_t cb)
+{
+    assert(q);
+
+    q->callbacks.dereg = cb;
+}
