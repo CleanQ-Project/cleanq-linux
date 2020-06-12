@@ -9,7 +9,8 @@
 #ifndef CLEANQ_IPCQ_H_
 #define CLEANQ_IPCQ_H_ 1
 
-#include <cleanq.h>
+#include <stdbool.h>
+#include <cleanq/cleanq.h>
 
 ///< forwrd declaration
 struct cleanq_ipcq;

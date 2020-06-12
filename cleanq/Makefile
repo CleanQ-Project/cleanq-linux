@@ -20,7 +20,7 @@ CC=gcc
 LIBRARY=libcleanq
 
 # setting the include path
-INC=-I./include  -I./utils -I./
+INC=-I./include  -I./utils
 
 # compiler flags
 CFLAGS=-Wall -Werror -Wextra -std=gnu11  -fPIC -O3
@@ -34,7 +34,7 @@ C_FILES_CLEANQ=$(wildcard *.c)
 H_FILES_CLEANQ=$(wildcard *.h) $(wildcard utils/*.h)
 
 # Public Headers
-INCLUDES=$(wildcard include/*.h) $(wildcard include/backends/*h)
+INCLUDES=$(shell find include/ -type f -name '*.h')
 
 # all files
 C_FILES=$(C_FILES_BACKENDS) $(C_FILES_CLEANQ)
@@ -68,7 +68,7 @@ $(LIBRARY).a: $(OBJ_FILES) Makefile
 	ar rcs $@ $(OBJ_FILES)
 
 build: $(LIBRARY).a $(LIBRARY).so $(INCLUDES)
-	rsync -a include/ ../build/include/cleanq
+	rsync -a include/cleanq ../build/include
 	rsync $(LIBRARY).a ../build/lib
 	rsync $(LIBRARY).so ../build/lib
 

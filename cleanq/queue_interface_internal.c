@@ -7,10 +7,10 @@
  * ETH Zurich D-INFK, Universitaetstr. 6, CH-8092 Zurich. Attn: Systems Group.
  */
 
-#include <cleanq.h>
-#include <cleanq_backend.h>
+#include <cleanq/cleanq.h>
 
-#include "region_pool.h"
+#include <cleanq_backend.h>
+#include <region_pool.h>
 
 
 /*

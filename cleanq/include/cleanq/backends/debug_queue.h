@@ -10,7 +10,7 @@
 #ifndef CLEANQ_DEBUGQ_H_
 #define CLEANQ_DEBUGQ_H_ 1
 
-#include <cleanq.h>
+#include <cleanq/cleanq.h>
 
 ///< forward declaration of opaque type
 struct cleanq_debugq;

@@ -10,6 +10,8 @@
 #ifndef CLEANQ_BACKEND_LOOPBACK_QUEUE_H_
 #define CLEANQ_BACKEND_LOOPBACK_QUEUE_H_
 
+#include <cleanq/cleanq.h>
+
 ///< forward declaration of the queue type
 struct loopback_queue;
 

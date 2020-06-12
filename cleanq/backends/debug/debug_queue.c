@@ -14,9 +14,10 @@
 #include <sched.h>
 #include <assert.h>
 
-#include <cleanq.h>
+#include <cleanq/cleanq.h>
+#include <cleanq/backends/debug_queue.h>
+
 #include <cleanq_backend.h>
-#include <backends/debug_queue.h>
 #include <slab.h>
 
 

@@ -9,7 +9,7 @@
 #ifndef REGION_POOL_H_
 #define REGION_POOL_H_ 1
 
-#include <cleanq.h>
+#include <cleanq/cleanq.h>
 
 ///< forward declarations
 struct region_pool;

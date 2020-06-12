@@ -9,7 +9,8 @@
 #ifndef CLEANQ_FF_QUEUE_H_
 #define CLEANQ_FF_QUEUE_H_ 1
 
-#include <cleanq.h>
+#include <stdbool.h>
+#include <cleanq/cleanq.h>
 
 ///< forward declaration
 struct cleanq_ffq;

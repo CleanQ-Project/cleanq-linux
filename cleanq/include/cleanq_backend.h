@@ -13,7 +13,7 @@
 
 #include <stdbool.h>
 
-#include <cleanq.h>
+#include <cleanq/cleanq.h>
 
 
 /*

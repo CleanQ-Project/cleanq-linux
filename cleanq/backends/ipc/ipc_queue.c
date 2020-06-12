@@ -17,10 +17,9 @@
 #include <assert.h>
 #include <string.h>
 
-#include <cleanq.h>
+#include <cleanq/cleanq.h>
+#include <cleanq/backends/ipc_queue.h>
 #include <cleanq_backend.h>
-#include <backends/ipc_queue.h>
-
 
 /*
  * ================================================================================================

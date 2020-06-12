@@ -10,11 +10,11 @@
 #include <assert.h>
 #include <string.h>
 
-#include <cleanq.h>
-#include <cleanq_backend.h>
+#include <cleanq/cleanq.h>
 
-#include "region_pool.h"
-#include "debug.h"
+#include <cleanq_backend.h>
+#include <region_pool.h>
+#include <debug.h>
 
 
 /*

@@ -11,9 +11,10 @@
 #include <stdbool.h>
 #include <assert.h>
 
-#include <cleanq.h>
+#include <cleanq/cleanq.h>
+#include <cleanq/backends/loopback_queue.h>
 #include <cleanq_backend.h>
-#include <backends/loopback_queue.h>
+
 
 
 /*

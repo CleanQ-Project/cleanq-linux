@@ -19,9 +19,10 @@
 #include <fcntl.h>
 
 
-#include <cleanq.h>
+#include <cleanq/cleanq.h>
+#include <cleanq/backends/ff_queue.h>
 #include <cleanq_backend.h>
-#include <backends/ff_queue.h>
+
 
 #include "ffq_impl.h"
 
