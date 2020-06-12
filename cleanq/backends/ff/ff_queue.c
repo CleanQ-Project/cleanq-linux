@@ -44,7 +44,6 @@ extern char *__progname;
             printf("FFQ:%s:%s:%d: ", __progname, __func__, __LINE__);                             \
             printf(x);                                                                            \
         } while (0)
-
 #else
 #    define FFQ_DEBUG(x...) ((void)0)
 #endif
@@ -60,7 +59,7 @@ extern char *__progname;
 #define CQ_FFQ_DEFAULT_SIZE 64
 
 ///< the size of a FFQ one-directional channel
-#define CQ_FFQ_CHAN_SIZE CQ_FFQ_DEFAULT_SIZE * FFQ_MSG_BYTES
+#define CQ_FFQ_CHAN_SIZE (CQ_FFQ_DEFAULT_SIZE * FFQ_MSG_BYTES)
 
 ///< the total size of the bi-directional FFQ
 #define CQ_FFQ_MEM_SIZE (2 * CQ_FFQ_CHAN_SIZE)
