@@ -312,11 +312,11 @@ errval_t ff_destroy(struct cleanq *q)
 
     errval_t err = CLEANQ_ERR_OK;
 
-    if (munmap(ffq->rxtx_mem, ffq->memsize) == -1) {
+    if (ffq->rxtx_mem && munmap(ffq->rxtx_mem, ffq->memsize) == -1) {
         printf("WARNING: FFQ destroy failed. (munmap)\n");
     }
 
-    if (shm_unlink(ffq->name) == -1) {
+    if (ffq->name && shm_unlink(ffq->name) == -1) {
         printf("WARNING: FFQ destroy failed. (shm_unlink)\n");
     }
 
@@ -392,7 +392,7 @@ errval_t cleanq_ffq_create(struct cleanq_ffq **q, const char *qname, bool clear)
     buf = creator ? newq->rxtx_mem : newq->rxtx_mem + FFQ_CHAN_SIZE;
     ffq_impl_init_rx(&newq->rxq, buf, FFQ_DEFAULT_SIZE);
 
-    buf = creator ? newq->rxtx_mem : newq->rxtx_mem + FFQ_CHAN_SIZE;
+    buf = creator ? newq->rxtx_mem + FFQ_CHAN_SIZE: newq->rxtx_mem;
     ffq_impl_init_tx(&newq->txq, buf, FFQ_DEFAULT_SIZE);
 
     /* initializing  the generic cleanq part */
