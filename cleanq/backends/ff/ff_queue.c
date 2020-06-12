@@ -55,14 +55,14 @@ extern char *__progname;
  * ================================================================================================
  */
 
-///< this is the default size of the queue in message slots
-#define CQ_FFQ_DEFAULT_SIZE 64
+///< this is the default size of the one-directional queue in message slots
+#define FFQ_DEFAULT_SIZE 64
 
 ///< the size of a FFQ one-directional channel
-#define CQ_FFQ_CHAN_SIZE (CQ_FFQ_DEFAULT_SIZE * FFQ_MSG_BYTES)
+#define FFQ_CHAN_SIZE (FFQ_DEFAULT_SIZE * FFQ_MSG_BYTES)
 
 ///< the total size of the bi-directional FFQ
-#define CQ_FFQ_MEM_SIZE (2 * CQ_FFQ_CHAN_SIZE)
+#define FFQ_MEM_SIZE (2 * FFQ_CHAN_SIZE)
 
 
 ///< defines a FFQ CleanQ backend
@@ -298,6 +298,14 @@ errval_t ff_control(struct cleanq *q, uint64_t request, uint64_t value, uint64_t
  * ================================================================================================
  */
 
+
+/**
+ * @brief destroys the queue
+ *
+ * @param q     The queue state to free (and the queue to be shut down)
+ *
+ * @returns error on failure or CLEANQ_ERR_OK on success
+ */
 errval_t ff_destroy(struct cleanq *q)
 {
     struct cleanq_ffq *ffq = (struct cleanq_ffq *)q;
@@ -361,30 +369,31 @@ errval_t cleanq_ffq_create(struct cleanq_ffq **q, const char *qname, bool clear)
         }
     }
 
-    if (creator && ftruncate(fd, CQ_FFQ_MEM_SIZE)) {
+    if (creator && ftruncate(fd, FFQ_MEM_SIZE)) {
         goto cleanup3;
     }
 
     FFQ_DEBUG("Mapping queue frame\n");
-    void *buf = mmap(NULL, CQ_FFQ_MEM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    void *buf = mmap(NULL, FFQ_MEM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (buf == MAP_FAILED) {
         err = CLEANQ_ERR_MALLOC_FAIL;
-        goto cleanup2;
+        goto cleanup3;
     }
 
     if (clear) {
-        memset(buf, 0, CQ_FFQ_MEM_SIZE);
+        memset(buf, 0, FFQ_MEM_SIZE);
     }
 
     newq->rxtx_mem = buf;
+    newq->memsize = FFQ_MEM_SIZE;
 
 
     /* initialize the ffq rx/tx channels */
-    buf = creator ? newq->rxtx_mem : newq->rxtx_mem + CQ_FFQ_CHAN_SIZE;
-    ffq_impl_init_rx(&newq->rxq, buf, CQ_FFQ_DEFAULT_SIZE);
+    buf = creator ? newq->rxtx_mem : newq->rxtx_mem + FFQ_CHAN_SIZE;
+    ffq_impl_init_rx(&newq->rxq, buf, FFQ_DEFAULT_SIZE);
 
-    buf = creator ? newq->rxtx_mem : newq->rxtx_mem + CQ_FFQ_CHAN_SIZE;
-    ffq_impl_init_tx(&newq->txq, buf, CQ_FFQ_DEFAULT_SIZE);
+    buf = creator ? newq->rxtx_mem : newq->rxtx_mem + FFQ_CHAN_SIZE;
+    ffq_impl_init_tx(&newq->txq, buf, FFQ_DEFAULT_SIZE);
 
     /* initializing  the generic cleanq part */
     err = cleanq_init(&newq->q);
