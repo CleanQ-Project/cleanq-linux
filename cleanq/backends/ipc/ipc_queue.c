@@ -485,7 +485,7 @@ static errval_t ipcq_deregister(struct cleanq *q, regionid_t rid)
  *
  * @returns error on failure or CLEANQ_ERR_OK on success
  */
-errval_t ipcq_control(struct cleanq *q, uint64_t request, uint64_t value, uint64_t *result)
+static errval_t ipcq_control(struct cleanq *q, uint64_t request, uint64_t value, uint64_t *result)
 {
     (void)(q);
     (void)(request);
