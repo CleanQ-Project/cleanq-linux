@@ -156,7 +156,7 @@ static errval_t ff_enqueue(struct cleanq *queue, regionid_t region_id, genoffset
     struct cleanq_ffq *q = (struct cleanq_ffq *)queue;
     bool sent = ffq_impl_send(&q->txq, region_id, offset, length, valid_data, valid_length,
                               misc_flags);
-    return sent ? CLEANQ_ERR_QUEUE_FULL : CLEANQ_ERR_OK;
+    return sent ? CLEANQ_ERR_OK : CLEANQ_ERR_QUEUE_FULL;
 }
 
 
@@ -391,10 +391,10 @@ errval_t cleanq_ffq_create(struct cleanq_ffq **q, const char *qname, bool clear)
 
     /* initialize the ffq rx/tx channels */
     buf = creator ? newq->rxtx_mem : newq->rxtx_mem + FFQ_CHAN_SIZE;
-    ffq_impl_init_rx(&newq->rxq, buf, FFQ_DEFAULT_SIZE);
+    ffq_impl_init_rx(&newq->rxq, buf, FFQ_DEFAULT_SIZE, creator);
 
     buf = creator ? newq->rxtx_mem + FFQ_CHAN_SIZE: newq->rxtx_mem;
-    ffq_impl_init_tx(&newq->txq, buf, FFQ_DEFAULT_SIZE);
+    ffq_impl_init_tx(&newq->txq, buf, FFQ_DEFAULT_SIZE, creator);
 
     /* initializing  the generic cleanq part */
     err = cleanq_init(&newq->q);

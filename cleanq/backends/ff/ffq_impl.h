@@ -76,11 +76,12 @@ struct ffq_chan
  * @param q       Pointer to queue-state structure to initialize.
  * @param buf     Pointer to ring buffer for the queue.
  * @param slots   Size (in slots) of buffer.
+ * @param init    initialize the queue message slots
  *
  * The state structure and buffer must already be allocated and appropriately
  * aligned.
  */
-static inline void ffq_impl_init_tx(struct ffq_chan *q, void *buf, ffq_idx_t slots)
+static inline void ffq_impl_init_tx(struct ffq_chan *q, void *buf, ffq_idx_t slots, bool init)
 {
     assert(((uintptr_t)buf & (ARCH_CACHELINE_SIZE - 1)) == 0);
     q->direction = FFQ_DIRECTION_SEND;
@@ -88,7 +89,7 @@ static inline void ffq_impl_init_tx(struct ffq_chan *q, void *buf, ffq_idx_t slo
     q->slots = (volatile struct ffq_slot *)buf;
     q->pos = 0;
 
-    for (ffq_idx_t i = 0; i < slots; i++) {
+    for (ffq_idx_t i = 0; i < slots && init; i++) {
         q->slots[i].data[0] = FFQ_SLOT_EMPTY;
     }
 }
@@ -100,11 +101,12 @@ static inline void ffq_impl_init_tx(struct ffq_chan *q, void *buf, ffq_idx_t slo
  * @param q       Pointer to queue-state structure to initialize.
  * @param buf     Pointer to ring buffer for the queue.
  * @param slots   Size (in slots) of buffer.
+ * @param init    initialize the queue message slots
  *
  * The state structure and buffer must already be allocated and appropriately
  * aligned.
  */
-static inline void ffq_impl_init_rx(struct ffq_chan *q, void *buf, ffq_idx_t slots)
+static inline void ffq_impl_init_rx(struct ffq_chan *q, void *buf, ffq_idx_t slots, bool init)
 {
     assert(((uintptr_t)buf & (ARCH_CACHELINE_SIZE - 1)) == 0);
     q->direction = FFQ_DIRECTION_RECV;
@@ -112,7 +114,7 @@ static inline void ffq_impl_init_rx(struct ffq_chan *q, void *buf, ffq_idx_t slo
     q->slots = (volatile struct ffq_slot *)buf;
     q->pos = 0;
 
-    for (ffq_idx_t i = 0; i < slots; i++) {
+    for (ffq_idx_t i = 0; i < slots && init; i++) {
         q->slots[i].data[0] = FFQ_SLOT_EMPTY;
     }
 }
