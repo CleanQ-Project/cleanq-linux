@@ -8,27 +8,45 @@
 #
 
 CC=gcc
-MAKEDEPEND:=makedepend -Y
+
+# switch to enable benchmarking for the queues
+ENABLE_BENCH=n
+
 
 INC=-I../../build/include
 LIB=-L../../build/lib
 CFLAGS=-g -Wall -Werror -Wextra -std=gnu11
 
+
+ifeq ($(ENABLE_BENCH),y)
+	# adding benchmarking
+	CFLAGS+=-DBENCH_CLEANQ
+	INC+=-I./bench
+endif
+
+
+
 CLEANQ_LIBS=-lcleanq -lrt
 CLEANQ_LIBTS_STATIC=../../build/lib/libcleanq.a -lrt
 
-all: echo echostatic
+all: echoserver echoserverstatic echoclient echoclientstatic
 
-echo:
-	$(CC) $(CFLAGS) $(INC) -o $@ echo.c $(LIB) $(CLEANQ_LIBS)
+echoserver: server.c
+	$(CC) $(CFLAGS) $(INC) -o $@ server.c $(LIB) $(CLEANQ_LIBS)
 
-echostatic:
-	$(CC) $(CFLAGS) $(INC) -o $@ echo.c $(CLEANQ_LIBTS_STATIC)
+echoserverstatic: server.c
+	$(CC) $(CFLAGS) $(INC) -o $@ server.c $(CLEANQ_LIBTS_STATIC)
+
+echoclient: client.c
+	$(CC) $(CFLAGS) $(INC) -o $@ client.c $(LIB) $(CLEANQ_LIBS)
+
+echoclientstatic:  client.c
+	$(CC) $(CFLAGS) $(INC) -o $@ client.c $(CLEANQ_LIBTS_STATIC)
 
 
 build : all
-	rsync -a echo ../../build/bin
-	rsync -a echostatic ../../build/bin
+	rsync -a echoserver* ../../build/bin
+	rsync -a echoclient* ../../build/bin
 
 clean:
 	rm -rf echo echostatic

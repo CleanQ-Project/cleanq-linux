@@ -7,20 +7,16 @@
 # ETH Zurich D-INFK, Universitaetstr. 6, CH-8092 Zurich. attn: systems group.
 #
 
-CLEANQ_TESTS=cleanqecho cleanqclient
+CLEANQ_TESTS=cleanqecho
 
 all: $(CLEANQ_TESTS)
 
 cleanqecho:
 	make -C echoserver
 
-cleanqclient:
-	make -C client
 
 build:
 	make -C echoserver build
-	make -C client build
 
 clean:
 	make -C echoserver clean
-	make -C client clean

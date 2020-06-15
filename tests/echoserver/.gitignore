@@ -1,2 +1,4 @@
-echo
-echostatic
+echoserver
+echoserverstatic
+echoclient
+echoclinetstatic
