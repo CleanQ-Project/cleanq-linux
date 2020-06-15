@@ -10,7 +10,7 @@
 all: build
 
 build:
-	echo "NYI"
+	make -C ffq build
 
 clean:
-	echo "NYI"
+	make -C ffq clean
