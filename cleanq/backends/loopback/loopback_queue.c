@@ -30,7 +30,7 @@
 #define LOOPBACK_QUEUE_SIZE 64
 
 ///< defines the looback queue backend
-struct loopback_queue
+struct cleanq_loopbackq
 {
     ///< generic cleanq part
     struct cleanq q;
@@ -68,7 +68,7 @@ static errval_t loopback_enqueue(struct cleanq *q, regionid_t rid, genoffset_t o
 {
     assert(q);
 
-    struct loopback_queue *lq = (struct loopback_queue *)q;
+    struct cleanq_loopbackq *lq = (struct cleanq_loopbackq *)q;
 
     if (lq->num_ele == LOOPBACK_QUEUE_SIZE) {
         return CLEANQ_ERR_QUEUE_FULL;
@@ -101,7 +101,7 @@ static errval_t loopback_dequeue(struct cleanq *q, regionid_t *rid, genoffset_t 
 {
     assert(q);
 
-    struct loopback_queue *lq = (struct loopback_queue *)q;
+    struct cleanq_loopbackq *lq = (struct cleanq_loopbackq *)q;
     if (lq->num_ele == 0) {
         return CLEANQ_ERR_QUEUE_EMPTY;
     }
@@ -199,7 +199,7 @@ static errval_t loopback_destroy(struct cleanq *q)
     assert(q);
 
     /* free the queue */
-    free((struct loopback_queue *)q);
+    free((struct cleanq_loopbackq *)q);
 
     return CLEANQ_ERR_OK;
 }
@@ -220,11 +220,11 @@ static errval_t loopback_destroy(struct cleanq *q)
  * @returns CLEANQ_ERR_OK - on success
  *          CLEANQ_ERR_MALLOC_FAIL - if the queue could not be initialized
  */
-errval_t loopback_queue_create(struct loopback_queue **q)
+errval_t loopback_queue_create(struct cleanq_loopbackq **q)
 {
     assert(q);
 
-    struct loopback_queue *lq = (struct loopback_queue *)calloc(1, sizeof(struct loopback_queue));
+    struct cleanq_loopbackq *lq = (struct cleanq_loopbackq *)calloc(1, sizeof(struct cleanq_loopbackq));
     if (lq == NULL) {
         return CLEANQ_ERR_MALLOC_FAIL;
     }

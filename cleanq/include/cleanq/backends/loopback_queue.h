@@ -13,7 +13,7 @@
 #include <cleanq/cleanq.h>
 
 ///< forward declaration of the queue type
-struct loopback_queue;
+struct cleanq_loopbackq;
 
 /**
  * @brief creates a new loopback queue
@@ -23,6 +23,6 @@ struct loopback_queue;
  * @returns CLEANQ_ERR_OK - on success
  *          CLEANQ_ERR_MALLOC_FAIL - if the queue could not be initialized
  */
-errval_t loopback_queue_create(struct loopback_queue **q);
+errval_t loopback_queue_create(struct cleanq_loopbackq **q);
 
 #endif  // CLEANQ_BACKEND_LOOPBACK_QUEUE_H_
